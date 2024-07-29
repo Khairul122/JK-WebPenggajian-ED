@@ -55,6 +55,8 @@ class Duk extends CI_Controller {
         $this->form_validation->set_rules('usia','Usia','required|xss_clean|numeric');
         $this->form_validation->set_rules('pendidikan','Pendidikan','required|xss_clean');
         $this->form_validation->set_rules('ket','Keterangan','required|xss_clean');
+        $this->form_validation->set_rules('tunjangan','Tunjangan','required|xss_clean|numeric');
+        
         $data['pegawai']=$this->M_pegawai->getPegawaiById($id);
         $data['duk']=$this->M_duk->getDataDukById($id);
         if($this->form_validation->run() == FALSE){
@@ -64,10 +66,11 @@ class Duk extends CI_Controller {
             $this->load->view('footer', $data);
         }else{
             $this->M_duk->updateDataDuk();
-			$this->session->set_flashdata('duk', 'Diperbarui');
-			redirect('duk');
+            $this->session->set_flashdata('duk', 'Diperbarui');
+            redirect('duk');
         }
     }
+    
 
 	public function export() {
         $data['duk'] = $this->M_duk->getAllDataDuk();
@@ -95,11 +98,12 @@ class Duk extends CI_Controller {
         $sheet->setCellValue('J1', 'Masa Kerja Golongan (Bulan)');
         $sheet->setCellValue('K1', 'Masa Kerja Keseluruhan (Tahun)');
         $sheet->setCellValue('L1', 'Masa Kerja Keseluruhan (Bulan)');
-        $sheet->setCellValue('M1', 'Naik Pangkat YAD');
-        $sheet->setCellValue('N1', 'Naik Gaji YAD');
-        $sheet->setCellValue('O1', 'Usia');
-        $sheet->setCellValue('P1', 'Pendidikan');
-        $sheet->setCellValue('Q1', 'Keterangan');
+        $sheet->setCellValue('M1', 'Tunjangan');
+        $sheet->setCellValue('N1', 'Naik Pangkat YAD');
+        $sheet->setCellValue('O1', 'Naik Gaji YAD');
+        $sheet->setCellValue('P1', 'Usia');
+        $sheet->setCellValue('Q1', 'Pendidikan');
+        $sheet->setCellValue('R1', 'Keterangan');
 
         $baris = 2;
         $x = 1;
@@ -117,11 +121,12 @@ class Duk extends CI_Controller {
             $sheet->setCellValue('J' . $baris, $p['masa_kerja_golongan_bulan']);
             $sheet->setCellValue('K' . $baris, $p['masa_kerja_seluruh_tahun']);
             $sheet->setCellValue('L' . $baris, $p['masa_kerja_seluruh_bulan']);
-            $sheet->setCellValue('M' . $baris, $p['naik_pangkat_yad']);
-            $sheet->setCellValue('N' . $baris, $p['naik_gaji_yad']);
-            $sheet->setCellValue('O' . $baris, $p['usia']);
-            $sheet->setCellValue('P' . $baris, $p['pendidikan']);
-            $sheet->setCellValue('Q' . $baris, $p['keterangan']);
+            $sheet->setCellValue('M' . $baris, $p['tunjangan']);
+            $sheet->setCellValue('N' . $baris, $p['naik_pangkat_yad']);
+            $sheet->setCellValue('O' . $baris, $p['naik_gaji_yad']);
+            $sheet->setCellValue('P' . $baris, $p['usia']);
+            $sheet->setCellValue('Q' . $baris, $p['pendidikan']);
+            $sheet->setCellValue('R' . $baris, $p['keterangan']);
             $x++;
             $baris++;
         }

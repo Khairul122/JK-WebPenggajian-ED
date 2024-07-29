@@ -32,11 +32,13 @@ class M_duk extends CI_Model {
             'naik_gaji_yad'=>$this->input->post('naik_gaji',true),
             'usia'=>$this->input->post('usia',true),
             'pendidikan'=>$this->input->post('pendidikan',true),
-            'keterangan'=>$this->input->post('ket',true)
+            'keterangan'=>$this->input->post('ket',true),
+            'tunjangan'=>$this->input->post('tunjangan',true)  // Tambahkan ini
         ];
         $this->db->where('id_duk',$this->input->post('id'));
         $this->db->update('duk',$data);
     }
+    
 
     public function dataGaji($id,$nip){
         $query = $this->db->query('SELECT gaji_pokok FROM tb_golongan WHERE golongan = (SELECT golongan FROM duk WHERE nip = '.$nip.') AND masa_kerja = (SELECT masa_kerja_golongan_tahun FROM duk WHERE nip = '.$nip.' )');
