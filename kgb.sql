@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 10 Jul 2024 pada 12.18
--- Versi server: 10.4.27-MariaDB
--- Versi PHP: 7.4.33
+-- Host: localhost:3306
+-- Generation Time: Jul 29, 2024 at 11:23 AM
+-- Server version: 8.0.30
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,11 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `duk`
+-- Table structure for table `duk`
 --
 
 CREATE TABLE `duk` (
-  `id_duk` int(11) NOT NULL,
+  `id_duk` int NOT NULL,
   `nip` varchar(100) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `pangkat` varchar(100) NOT NULL,
@@ -36,39 +36,40 @@ CREATE TABLE `duk` (
   `tmt_pangkat` date NOT NULL,
   `jabatan` varchar(100) NOT NULL,
   `tmt_jabatan` date NOT NULL,
-  `masa_kerja_golongan_tahun` int(11) NOT NULL,
-  `masa_kerja_golongan_bulan` int(11) NOT NULL,
-  `masa_kerja_seluruh_tahun` int(11) NOT NULL,
-  `masa_kerja_seluruh_bulan` int(11) NOT NULL,
+  `masa_kerja_golongan_tahun` int NOT NULL,
+  `masa_kerja_golongan_bulan` int NOT NULL,
+  `masa_kerja_seluruh_tahun` int NOT NULL,
+  `masa_kerja_seluruh_bulan` int NOT NULL,
+  `tunjangan` int DEFAULT NULL,
   `naik_pangkat_yad` date NOT NULL,
   `naik_gaji_yad` date NOT NULL,
-  `usia` int(11) NOT NULL,
+  `usia` int NOT NULL,
   `pendidikan` varchar(50) NOT NULL,
   `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `duk`
+-- Dumping data for table `duk`
 --
 
-INSERT INTO `duk` (`id_duk`, `nip`, `nama`, `pangkat`, `golongan`, `tmt_pangkat`, `jabatan`, `tmt_jabatan`, `masa_kerja_golongan_tahun`, `masa_kerja_golongan_bulan`, `masa_kerja_seluruh_tahun`, `masa_kerja_seluruh_bulan`, `naik_pangkat_yad`, `naik_gaji_yad`, `usia`, `pendidikan`, `keterangan`) VALUES
-(102, '170512345678901234', 'Khairul Huda', 'Pembina Utama', 'IV/a', '0000-00-00', 'Anggota', '0000-00-00', 1, 1, 1, 1, '2024-07-10', '2024-07-10', 0, 'D4', 'HALO'),
-(103, '209827662', 'arief', 'Pembina Utama', 'I/d', '0000-00-00', 'sekretaris', '1900-11-20', 2, 1, 1, 2, '1900-11-13', '1900-11-15', 56, 'S2', '-');
+INSERT INTO `duk` (`id_duk`, `nip`, `nama`, `pangkat`, `golongan`, `tmt_pangkat`, `jabatan`, `tmt_jabatan`, `masa_kerja_golongan_tahun`, `masa_kerja_golongan_bulan`, `masa_kerja_seluruh_tahun`, `masa_kerja_seluruh_bulan`, `tunjangan`, `naik_pangkat_yad`, `naik_gaji_yad`, `usia`, `pendidikan`, `keterangan`) VALUES
+(102, '170512345678901234', 'Khairul Huda', 'Pembina Utama', 'IV/a', '0011-11-30', 'Anggota', '0000-00-00', 1, 1, 1, 1, 1, '0015-11-30', '2024-07-10', 0, 'D4', 'HALO'),
+(103, '209827662', 'arief', 'Pembina Utama', 'I/d', '0000-00-00', 'sekretaris', '1900-11-20', 2, 1, 1, 2, NULL, '1900-11-13', '1900-11-15', 56, 'S2', '-');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ketua_pn`
+-- Table structure for table `ketua_pn`
 --
 
 CREATE TABLE `ketua_pn` (
-  `id_ketua` int(11) NOT NULL,
+  `id_ketua` int NOT NULL,
   `nama` varchar(100) NOT NULL,
   `nip` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `ketua_pn`
+-- Dumping data for table `ketua_pn`
 --
 
 INSERT INTO `ketua_pn` (`id_ketua`, `nama`, `nip`) VALUES
@@ -77,27 +78,27 @@ INSERT INTO `ketua_pn` (`id_ketua`, `nama`, `nip`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawai`
+-- Table structure for table `pegawai`
 --
 
 CREATE TABLE `pegawai` (
-  `id_pegawai` int(11) NOT NULL,
+  `id_pegawai` int NOT NULL,
   `nip` varchar(100) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `jenis_kelamin` varchar(100) NOT NULL,
   `tempat_lahir` varchar(100) NOT NULL,
   `tgl_lahir` date NOT NULL,
-  `umur` int(11) NOT NULL,
+  `umur` int NOT NULL,
   `golongan_darah` varchar(5) NOT NULL,
   `agama` varchar(50) NOT NULL,
   `no_telp` varchar(15) NOT NULL,
   `email` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
   `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pegawai`
+-- Dumping data for table `pegawai`
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nip`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `umur`, `golongan_darah`, `agama`, `no_telp`, `email`, `alamat`, `keterangan`) VALUES
@@ -107,18 +108,18 @@ INSERT INTO `pegawai` (`id_pegawai`, `nip`, `nama`, `jenis_kelamin`, `tempat_lah
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sk`
+-- Table structure for table `sk`
 --
 
 CREATE TABLE `sk` (
-  `id_sk` int(11) NOT NULL,
+  `id_sk` int NOT NULL,
   `no_sk_kgb` varchar(50) NOT NULL,
   `no_sk_pangkat` varchar(50) NOT NULL,
   `nip` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sk`
+-- Dumping data for table `sk`
 --
 
 INSERT INTO `sk` (`id_sk`, `no_sk_kgb`, `no_sk_pangkat`, `nip`) VALUES
@@ -128,18 +129,18 @@ INSERT INTO `sk` (`id_sk`, `no_sk_kgb`, `no_sk_pangkat`, `nip`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_golongan`
+-- Table structure for table `tb_golongan`
 --
 
 CREATE TABLE `tb_golongan` (
-  `id_golongan` int(11) NOT NULL,
+  `id_golongan` int NOT NULL,
   `golongan` varchar(100) NOT NULL,
   `masa_kerja` varchar(100) NOT NULL,
-  `gaji_pokok` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `gaji_pokok` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_golongan`
+-- Dumping data for table `tb_golongan`
 --
 
 INSERT INTO `tb_golongan` (`id_golongan`, `golongan`, `masa_kerja`, `gaji_pokok`) VALUES
@@ -674,18 +675,18 @@ INSERT INTO `tb_golongan` (`id_golongan`, `golongan`, `masa_kerja`, `gaji_pokok`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(32) NOT NULL,
   `account` varchar(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `account`) VALUES
@@ -698,80 +699,80 @@ INSERT INTO `user` (`id`, `username`, `password`, `account`) VALUES
 --
 
 --
--- Indeks untuk tabel `duk`
+-- Indexes for table `duk`
 --
 ALTER TABLE `duk`
   ADD PRIMARY KEY (`id_duk`);
 
 --
--- Indeks untuk tabel `ketua_pn`
+-- Indexes for table `ketua_pn`
 --
 ALTER TABLE `ketua_pn`
   ADD PRIMARY KEY (`id_ketua`);
 
 --
--- Indeks untuk tabel `pegawai`
+-- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`);
 
 --
--- Indeks untuk tabel `sk`
+-- Indexes for table `sk`
 --
 ALTER TABLE `sk`
   ADD PRIMARY KEY (`id_sk`);
 
 --
--- Indeks untuk tabel `tb_golongan`
+-- Indexes for table `tb_golongan`
 --
 ALTER TABLE `tb_golongan`
   ADD PRIMARY KEY (`id_golongan`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `duk`
+-- AUTO_INCREMENT for table `duk`
 --
 ALTER TABLE `duk`
-  MODIFY `id_duk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id_duk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
--- AUTO_INCREMENT untuk tabel `ketua_pn`
+-- AUTO_INCREMENT for table `ketua_pn`
 --
 ALTER TABLE `ketua_pn`
-  MODIFY `id_ketua` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ketua` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawai`
+-- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id_pegawai` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
--- AUTO_INCREMENT untuk tabel `sk`
+-- AUTO_INCREMENT for table `sk`
 --
 ALTER TABLE `sk`
-  MODIFY `id_sk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id_sk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_golongan`
+-- AUTO_INCREMENT for table `tb_golongan`
 --
 ALTER TABLE `tb_golongan`
-  MODIFY `id_golongan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
+  MODIFY `id_golongan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
