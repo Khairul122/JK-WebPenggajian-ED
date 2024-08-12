@@ -95,4 +95,13 @@ class M_duk extends CI_Model {
         // $this->db->set('masa_kerja_seluruh_tahun','masa_kerja_seluruh_tahun+2',FALSE);
         // $this->db->update('duk');
     }
+
+    public function getTunjanganByGolongan($golongan) {
+        $this->db->select('tunjangan');
+        $this->db->from('tb_golongan');
+        $this->db->where('golongan', $golongan);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+    
 }

@@ -7,7 +7,6 @@
       <small>Pegawai</small>
     </h1>
     <ol class="breadcrumb">
-
     </ol>
   </section>
 
@@ -19,7 +18,6 @@
           <div class="box-header">
             <h3 class="box-title"><i class="fa fa-credit-card"></i> Data DUK Pegawai</h3>
           </div>
-          <!-- /.box-header -->
           <div class="box-body">
             <?php if (validation_errors()) : ?>
               <div class="alert alert-danger" role="alert">
@@ -49,11 +47,9 @@
                     <div class="col-md-9">
                       <select class="form-control" name="pangkat" required>
                         <?php foreach ($pangkat as $p) : ?>
-                          <?php if ($p == $duk['pangkat']) : ?>
-                            <option value="<?= $p; ?>" selected><?= $p; ?></option>
-                          <?php else : ?>
-                            <option value="<?= $p; ?>"><?= $p; ?></option>
-                          <?php endif; ?>
+                          <option value="<?= $p; ?>" <?= $p == $duk['pangkat'] ? 'selected' : ''; ?>>
+                            <?= $p; ?>
+                          </option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -62,15 +58,20 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Golongan</label>
                     <div class="col-md-9">
-                      <select class="form-control" name="golongan" required>
+                      <select class="form-control" id="golongan" name="golongan" required>
                         <?php foreach ($gol as $g) : ?>
-                          <?php if ($g == $duk['golongan']) : ?>
-                            <option value="<?= $g; ?>" selected><?= $g; ?></option>
-                          <?php else : ?>
-                            <option value="<?= $g; ?>"><?= $g; ?></option>
-                          <?php endif; ?>
+                          <option value="<?= $g; ?>" <?= $g == $duk['golongan'] ? 'selected' : ''; ?>>
+                            <?= $g; ?>
+                          </option>
                         <?php endforeach; ?>
                       </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Tunjangan</label>
+                    <div class="col-md-9">
+                      <input type="number" id="tunjangan" name="tunjangan" class="form-control" value="<?= $duk['tunjangan'] ?>" readonly required>
                     </div>
                   </div>
 
@@ -81,7 +82,19 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" value="<?= $duk['tmt_pangkat']; ?>" name="tmt_pangkat" class="form-control pull-right" id="datepicker" required="">
+                        <input type="date" id="tmt_pangkat" value="<?= $duk['tmt_pangkat']; ?>" name="tmt_pangkat" class="form-control pull-right" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">TMT PNS</label>
+                    <div class="col-md-9">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" id="tmt_pns" value="<?= $duk['tmt_pns']; ?>" name="tmt_pns" class="form-control pull-right" required>
                       </div>
                     </div>
                   </div>
@@ -108,7 +121,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Masa Kerja Golongan (Tahun)</label>
                     <div class="col-md-9">
-                      <input type="number" name="mkgt" class="form-control" value="<?= $duk['masa_kerja_golongan_tahun'] ?>" required>
+                      <input type="number" id="mkgt" name="mkgt" class="form-control" value="<?= $duk['masa_kerja_golongan_tahun'] ?>" readonly required>
                     </div>
                   </div>
 
@@ -122,9 +135,10 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Masa Kerja Seluruhnya (Tahun)</label>
                     <div class="col-md-9">
-                      <input type="number" name="mkst" class="form-control" value="<?= $duk['masa_kerja_seluruh_tahun'] ?>" required>
+                      <input type="number" id="mkst" name="mkst" class="form-control" value="<?= $duk['masa_kerja_seluruh_tahun'] ?>" readonly required>
                     </div>
                   </div>
+
 
                   <div class="form-group">
                     <label class="col-md-3 control-label">Masa Kerja Seluruhnya (Bulan)</label>
@@ -132,14 +146,6 @@
                       <input type="number" name="mksb" class="form-control" value="<?= $duk['masa_kerja_seluruh_bulan'] ?>" required>
                     </div>
                   </div>
-
-                  <div class="form-group">
-                    <label class="col-md-3 control-label">Tunjangan</label>
-                    <div class="col-md-9">
-                      <input type="number" name="tunjangan" class="form-control" value="<?= $duk['tunjangan'] ?>" required>
-                    </div>
-                  </div>
-
 
                   <div class="form-group">
                     <label class="col-md-3 control-label">Naik Pangkat (YAD)</label>
@@ -194,7 +200,6 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <!-- <div class="col-md-2"></div> -->
                     <div class="col-md-12">
                       <button type="submit" class="btn btn-primary" style="float: right;"> <i class="fa fa-save"></i> Perbarui Data</button>
                     </div>
@@ -202,14 +207,60 @@
                 </form>
               </div>
             </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
   </section>
-  <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var tmtPnsInput = document.getElementById('tmt_pns');
+    var mkstInput = document.getElementById('mkst');
+    var tmtPangkatInput = document.getElementById('tmt_pangkat');
+    var mkgtInput = document.getElementById('mkgt');
+    var golonganSelect = document.getElementById('golongan');
+    var tunjanganInput = document.getElementById('tunjangan');
+
+    function calculateMasaKerja(dateInput, outputInput) {
+        var dateValue = dateInput.value;
+        if (dateValue) {
+            var date = new Date(dateValue);
+            var today = new Date();
+            var years = today.getFullYear() - date.getFullYear();
+            outputInput.value = years;
+        }
+    }
+
+    tmtPnsInput.addEventListener('change', function() {
+        calculateMasaKerja(tmtPnsInput, mkstInput);
+    });
+
+    tmtPangkatInput.addEventListener('change', function() {
+        calculateMasaKerja(tmtPangkatInput, mkgtInput);
+    });
+
+    golonganSelect.addEventListener('change', function() {
+        var golongan = golonganSelect.value;
+        $.ajax({
+            url: '<?= base_url('duk/getTunjangan'); ?>',
+            type: 'POST',
+            data: {golongan: golongan},
+            dataType: 'json',
+            success: function(data) {
+                if (data && data.tunjangan) {
+                    tunjanganInput.value = data.tunjangan;
+                } else {
+                    console.error("Data tunjangan tidak ditemukan.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Terjadi kesalahan saat mengambil data tunjangan: ", error);
+            }
+        });
+    });
+
+    // Inisialisasi perhitungan awal jika diperlukan
+    calculateMasaKerja(tmtPnsInput, mkstInput);
+    calculateMasaKerja(tmtPangkatInput, mkgtInput);
+});
+</script>

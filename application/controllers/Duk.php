@@ -143,4 +143,11 @@ class Duk extends CI_Controller {
 
         exit;
     }
+
+    public function getTunjangan() {
+        $golongan = $this->input->post('golongan');
+        $tunjangan = $this->M_duk->getTunjanganByGolongan($golongan);
+        echo json_encode($tunjangan);
+    }
+    
 }

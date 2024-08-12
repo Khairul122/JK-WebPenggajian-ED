@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Gaji extends CI_Controller {
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
         if($this->session->userdata('logged_in_admin') !== TRUE){
@@ -16,19 +16,19 @@ class Gaji extends CI_Controller {
         $this->load->helper('nominal');
         $this->load->helper('text');
     }
-	public function index()
-	{
-        $data['gaji']=$this->M_gaji->getAllDataGaji();
-        $data['sidebar']="#mn3";
+
+    public function index()
+    {
+        $data['gaji'] = $this->M_gaji->getAllDataGaji();
+        $data['sidebar'] = "#mn3";
         $this->load->view('header');
-        $this->load->view('gaji',$data);
+        $this->load->view('gaji', $data);
         $this->load->view('footer', $data);
-        
-	}
-    
+    }
+
     public function tambah()
     {
-        $data['gol']=[
+        $data['gol'] = [
             'IV/a','IV/b','IV/c','IV/d','IV/e',
             'III/a','III/b','III/c','III/d',
             'II/a','II/b','II/c','II/d',
@@ -36,22 +36,24 @@ class Gaji extends CI_Controller {
         ];
         $this->form_validation->set_rules('gol', 'Golongan', 'required|xss_clean');
         $this->form_validation->set_rules('masa_kerja', 'Masa Kerja', 'required|xss_clean');
-        $this->form_validation->set_rules('gaji_pokok', 'Golongan', 'required|xss_clean|numeric');
-    
-        if($this->form_validation->run()==FALSE){
-            $data['sidebar']="#mn3";
+        $this->form_validation->set_rules('gaji_pokok', 'Gaji Pokok', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('tunjangan', 'Tunjangan', 'required|xss_clean|numeric');
+
+        if($this->form_validation->run() == FALSE) {
+            $data['sidebar'] = "#mn3";
             $this->load->view('header');
-            $this->load->view('tambah-gaji',$data);
+            $this->load->view('tambah-gaji', $data);
             $this->load->view('footer', $data);
-        }else{
+        } else {
             $this->M_gaji->tambahDataGaji();
-			$this->session->set_flashdata('gaji', 'Ditambah');
-			redirect('gaji');
+            $this->session->set_flashdata('gaji', 'Ditambah');
+            redirect('gaji');
         }
     }
 
-    public function detailDataGaji($id){
-        $data['gol']=[
+    public function detailDataGaji($id)
+    {
+        $data['gol'] = [
             'IV/a','IV/b','IV/c','IV/d','IV/e',
             'III/a','III/b','III/c','III/d',
             'II/a','II/b','II/c','II/d',
@@ -59,25 +61,38 @@ class Gaji extends CI_Controller {
         ];
         $this->form_validation->set_rules('gol', 'Golongan', 'required|xss_clean');
         $this->form_validation->set_rules('masa_kerja', 'Masa Kerja', 'required|xss_clean');
-        $this->form_validation->set_rules('gaji_pokok', 'Golongan', 'required|xss_clean|numeric');
-        $data['gaji']=$this->M_gaji->getDataGajiById($id);
-        if($this->form_validation->run()==FALSE){
-            $data['sidebar']="#mn3";
+        $this->form_validation->set_rules('gaji_pokok', 'Gaji Pokok', 'required|xss_clean|numeric');
+        $this->form_validation->set_rules('tunjangan', 'Tunjangan', 'required|xss_clean|numeric');
+
+        $data['gaji'] = $this->M_gaji->getDataGajiById($id);
+        if($this->form_validation->run() == FALSE) {
+            $data['sidebar'] = "#mn3";
             $this->load->view('header');
-            $this->load->view('edit-gaji',$data);
+            $this->load->view('edit-gaji', $data);
             $this->load->view('footer', $data);
-        }else{
+        } else {
             $this->M_gaji->updateDataGaji();
-			$this->session->set_flashdata('gaji', 'Diperbarui');
-			redirect('gaji');
+            $this->session->set_flashdata('gaji', 'Diperbarui');
+            redirect('gaji');
         }
     }
 
-    public function hapusDataGaji($id){
+    public function hapusDataGaji($id)
+    {
         $this->M_gaji->hapusGajiPegawai($id);
-		$this->session->set_flashdata('gaji', 'Dihapus');
-		redirect('gaji');
+        $this->session->set_flashdata('gaji', 'Dihapus');
+        redirect('gaji');
     }
+
+    public function get_tunjangan() {
+        $golongan = $this->input->post('golongan', true);
+    
+        $this->load->model('M_gaji');
+        $tunjangan = $this->M_gaji->getTunjanganByGolongan($golongan);
+    
+        echo json_encode(['tunjangan' => $tunjangan['tunjangan']]);
+    }
+    
 
     public function export() {
         $data['gaji'] = $this->M_gaji->getAllDataGaji();
@@ -97,6 +112,7 @@ class Gaji extends CI_Controller {
         $sheet->setCellValue('B1', 'Golongan');
         $sheet->setCellValue('C1', 'Masa Kerja (Tahun)');
         $sheet->setCellValue('D1', 'Gaji Pokok');
+        $sheet->setCellValue('E1', 'Tunjangan');
 
         $baris = 2;
         $x = 1;
@@ -106,6 +122,7 @@ class Gaji extends CI_Controller {
             $sheet->setCellValue('B' . $baris, $p['golongan']);
             $sheet->setCellValue('C' . $baris, $p['masa_kerja']);
             $sheet->setCellValue('D' . $baris, $p['gaji_pokok']);
+            $sheet->setCellValue('E' . $baris, $p['tunjangan']);
 
             $x++;
             $baris++;
@@ -123,4 +140,4 @@ class Gaji extends CI_Controller {
 
         exit;
     }
-	}
+}
